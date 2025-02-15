@@ -1,6 +1,6 @@
 import { Box, Container } from '@chakra-ui/react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, EffectFade } from 'swiper/modules';
+import { Autoplay, EffectFade, Preloader } from 'swiper/modules';
 import Navigation from '../components/Navigation';
 import { useRef, useState, useEffect } from 'react';
 import 'swiper/css';
@@ -66,9 +66,34 @@ const colors = {
 export default function Home() {
   const swiperRef = useRef(null);
   const [textColor, setTextColor] = useState('white');
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Precarga de imágenes
+  useEffect(() => {
+    const preloadImages = async () => {
+      const imagePromises = slides.map((slide) => {
+        return new Promise((resolve, reject) => {
+          const img = new Image();
+          img.src = slide.image;
+          img.onload = resolve;
+          img.onerror = reject;
+        });
+      });
+
+      try {
+        await Promise.all(imagePromises);
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error preloading images:', error);
+        setIsLoading(false);
+      }
+    };
+
+    preloadImages();
+  }, []);
 
   const handleClick = () => {
-    if (swiperRef.current && swiperRef.current.swiper) {
+    if (swiperRef.current?.swiper) {
       swiperRef.current.swiper.slideNext();
     }
   };
@@ -79,6 +104,14 @@ export default function Home() {
     const randomColor = colorArray[Math.floor(Math.random() * colorArray.length)];
     setTextColor(randomColor);
   };
+
+  if (isLoading) {
+    return (
+      <Container maxW="100vw" minH="100vh" bg="#1E1E1E" display="flex" alignItems="center" justifyContent="center">
+        <Box color="white">Cargando...</Box>
+      </Container>
+    );
+  }
 
   return (
     <Container maxW="100vw" p={0} position="relative" bg="#1E1E1E" onClick={handleClick}>
@@ -99,7 +132,7 @@ export default function Home() {
       
       <Swiper
         ref={swiperRef}
-        modules={[Autoplay, EffectFade]}
+        modules={[Autoplay, EffectFade, Preloader]}
         effect="fade"
         autoplay={{
           delay: 4000,
@@ -109,9 +142,14 @@ export default function Home() {
           stopOnLastSlide: false,
           waitForTransition: true,
         }}
-        speed={1500}
+        speed={300}
+        fadeEffect={{
+          crossFade: true
+        }}
+        preloadImages={false}
+        watchSlidesProgress={true}
+        preventInteractionOnTransition={true}
         loop={true}
-        random={true}
         style={{
           width: '100vw',
           height: '100vh',
@@ -129,6 +167,7 @@ export default function Home() {
               bgSize="cover"
               bgPosition="center"
               position="relative"
+              loading="eager"
             />
           </SwiperSlide>
         ))}
