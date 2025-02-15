@@ -2,31 +2,51 @@ import { Box, Container, Grid, Heading, Text, VStack } from '@chakra-ui/react';
 import Navigation from '../../components/Navigation';
 import Link from 'next/link';
 
-// Datos de ejemplo - luego podrás personalizarlos con tus proyectos
+// Datos de ejemplo - proyectos individuales
 const photographyProjects = [
   {
-    id: 'street-photography',
-    title: 'Street Photography',
-    description: 'Capturas urbanas en blanco y negro',
+    id: 'proyecto-1',
+    title: 'Proyecto 1',
+    description: 'Descripción del proyecto 1',
     coverImage: 'https://picsum.photos/800/600?random=1',
+    images: [
+      'https://picsum.photos/800/600?random=11',
+      'https://picsum.photos/800/600?random=12',
+      'https://picsum.photos/800/600?random=13',
+    ]
   },
   {
-    id: 'portraits',
-    title: 'Portraits',
-    description: 'Retratos artísticos',
+    id: 'proyecto-2',
+    title: 'Proyecto 2',
+    description: 'Descripción del proyecto 2',
     coverImage: 'https://picsum.photos/800/600?random=2',
+    images: [
+      'https://picsum.photos/800/600?random=21',
+      'https://picsum.photos/800/600?random=22',
+      'https://picsum.photos/800/600?random=23',
+    ]
   },
   {
-    id: 'landscapes',
-    title: 'Landscapes',
-    description: 'Paisajes naturales',
+    id: 'proyecto-3',
+    title: 'Proyecto 3',
+    description: 'Descripción del proyecto 3',
     coverImage: 'https://picsum.photos/800/600?random=3',
+    images: [
+      'https://picsum.photos/800/600?random=31',
+      'https://picsum.photos/800/600?random=32',
+      'https://picsum.photos/800/600?random=33',
+    ]
   },
   {
-    id: 'urban',
-    title: 'Urban',
-    description: 'Fotografía urbana',
+    id: 'proyecto-4',
+    title: 'Proyecto 4',
+    description: 'Descripción del proyecto 4',
     coverImage: 'https://picsum.photos/800/600?random=4',
+    images: [
+      'https://picsum.photos/800/600?random=41',
+      'https://picsum.photos/800/600?random=42',
+      'https://picsum.photos/800/600?random=43',
+    ]
   },
 ];
 
@@ -40,97 +60,64 @@ export default function Photography() {
         right={0}
         mx={4}
         zIndex={2}
-        backdropFilter="blur(5px)"
-        borderRadius="full"
         px={6}
         py={2}
-        boxShadow="0 4px 30px rgba(0, 0, 0, 0.3)"
       >
         <Navigation />
       </Box>
 
-      <Container 
-        maxW="100vw" 
-        pt={24} 
-        pb={16} 
-        px={8}
-        h="calc(100vh - 32px)"
-        overflow="hidden"
-      >
-        <VStack spacing={8} align="stretch" h="100%">
-          <Heading 
-            size="2xl" 
-            fontWeight="light"
-            letterSpacing="wider"
-          >
-            Photography
-          </Heading>
-
-          <Grid 
-            templateColumns="repeat(2, 1fr)"
-            gap={8}
-            overflowY="auto"
-            css={{
-              '&::-webkit-scrollbar': {
-                width: '4px',
-              },
-              '&::-webkit-scrollbar-track': {
-                width: '6px',
-              },
-              '&::-webkit-scrollbar-thumb': {
-                background: 'gray.500',
-                borderRadius: '24px',
-              },
-            }}
-            pr={4}
-          >
-            {photographyProjects.map((project) => (
-              <Link 
-                key={project.id}
-                href={`/photography/${project.id}`}
-                style={{ textDecoration: 'none' }}
+      <Box pt={24}>
+        <Grid 
+          templateColumns="repeat(2, 1fr)"
+          gap="1px"
+          bg="#1E1E1E"
+          mx="0"
+          w="100%"
+        >
+          {photographyProjects.map((project, index) => (
+            <Link 
+              key={project.id}
+              href={`/photography/${project.id}`}
+              style={{ textDecoration: 'none' }}
+            >
+              <Box
+                position="relative"
+                aspectRatio="16/9"
+                overflow="hidden"
+                role="group"
+                cursor="pointer"
+                bg="#1E1E1E"
               >
                 <Box
-                  position="relative"
-                  h="600px"
-                  overflow="hidden"
-                  role="group"
-                  cursor="pointer"
-                  borderRadius="lg"
+                  w="100%"
+                  h="100%"
+                  bgImage={`url(${project.coverImage})`}
+                  bgSize="cover"
+                  bgPosition="center"
+                  transition="all 0.3s ease"
+                  _groupHover={{
+                    opacity: 0.8,
+                  }}
+                />
+                <Box
+                  position="absolute"
+                  bottom={6}
+                  left={index % 2 === 0 ? 6 : 'auto'}
+                  right={index % 2 === 0 ? 'auto' : 6}
+                  color="white"
+                  opacity={0}
+                  transition="opacity 0.3s ease"
+                  _groupHover={{
+                    opacity: 1,
+                  }}
                 >
-                  <Box
-                    w="100%"
-                    h="100%"
-                    bgImage={`url(${project.coverImage})`}
-                    bgSize="cover"
-                    bgPosition="center"
-                    transition="transform 0.3s ease"
-                    _groupHover={{
-                      transform: 'scale(1.05)',
-                    }}
-                  />
-                  <Box
-                    position="absolute"
-                    bottom={0}
-                    left={0}
-                    right={0}
-                    bg="blackAlpha.700"
-                    p={6}
-                    transform="translateY(100%)"
-                    transition="transform 0.3s ease"
-                    _groupHover={{
-                      transform: 'translateY(0)',
-                    }}
-                  >
-                    <Heading size="md" mb={2}>{project.title}</Heading>
-                    <Text fontSize="sm">{project.description}</Text>
-                  </Box>
+                  <Text fontSize="sm" fontWeight="light">{project.title}</Text>
                 </Box>
-              </Link>
-            ))}
-          </Grid>
-        </VStack>
-      </Container>
+              </Box>
+            </Link>
+          ))}
+        </Grid>
+      </Box>
     </Container>
   );
 } 

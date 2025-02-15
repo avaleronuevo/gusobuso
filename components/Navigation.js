@@ -6,7 +6,7 @@ export default function Navigation() {
   const router = useRouter();
   
   const links = [
-    { href: '/', label: 'Agustín', position: 'flex-start' },
+    { href: '/', label: 'Agustín Valero Nuevo', position: 'flex-start' },
     { href: '/photography', label: 'Photography', position: 'center' },
     { href: '/architecture', label: 'Architecture', position: 'center' },
     { href: '/about', label: 'About Me', position: 'flex-end' },
@@ -14,24 +14,68 @@ export default function Navigation() {
 
   return (
     <Flex w="100%" justifyContent="space-between" alignItems="center">
-      {links.map(({ href, label, position }) => (
-        <Box key={href} flex="1" textAlign={position === 'center' ? 'center' : 'inherit'} justifyContent={position}>
-          <Link
-            as={NextLink}
-            href={href}
-            color="white"
-            fontSize="lg"
-            textDecoration="none"
-            transition="color 0.3s ease"
-            _hover={{ 
-              color: 'black',
-              textDecoration: 'none'
-            }}
-          >
-            {label}
-          </Link>
-        </Box>
-      ))}
+      <Box flex="1" textAlign="left">
+        <Link
+          as={NextLink}
+          href="/"
+          color="white"
+          fontSize="lg"
+          textDecoration="none"
+          transition="color 0.3s ease"
+          _hover={{ 
+            color: 'black',
+            textDecoration: 'none'
+          }}
+        >
+          {links[0].label}
+        </Link>
+      </Box>
+      <Flex flex="2" justifyContent="center" gap={8}>
+        <Link
+          as={NextLink}
+          href="/photography"
+          color="white"
+          fontSize="lg"
+          textDecoration="none"
+          transition="color 0.3s ease"
+          _hover={{ 
+            color: 'black',
+            textDecoration: 'none'
+          }}
+        >
+          {links[1].label}
+        </Link>
+        <Link
+          as={NextLink}
+          href="/architecture"
+          color="white"
+          fontSize="lg"
+          textDecoration="none"
+          transition="color 0.3s ease"
+          _hover={{ 
+            color: 'black',
+            textDecoration: 'none'
+          }}
+        >
+          {links[2].label}
+        </Link>
+      </Flex>
+      <Box flex="1" textAlign="right">
+        <Link
+          as={NextLink}
+          href="/about"
+          color="white"
+          fontSize="lg"
+          textDecoration="none"
+          transition="color 0.3s ease"
+          _hover={{ 
+            color: 'black',
+            textDecoration: 'none'
+          }}
+        >
+          {links[3].label}
+        </Link>
+      </Box>
     </Flex>
   );
 } 

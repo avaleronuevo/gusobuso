@@ -48,11 +48,8 @@ export default function Home() {
         right={0}
         mx={4}
         zIndex={2}
-        backdropFilter="blur(5px)"
-        borderRadius="full"
         px={6}
         py={2}
-        boxShadow="0 4px 30px rgba(0, 0, 0, 0.3)"
       >
         <Navigation />
       </Box>
@@ -61,14 +58,14 @@ export default function Home() {
         modules={[Autoplay, EffectFade]}
         effect="fade"
         autoplay={{
-          delay: 6000,
+          delay: 4000,
           disableOnInteraction: false,
           reverseDirection: false,
           pauseOnMouseEnter: false,
           stopOnLastSlide: false,
           waitForTransition: true,
         }}
-        speed={3000}
+        speed={1500}
         loop={true}
         random={true}
         style={{
@@ -85,14 +82,7 @@ export default function Home() {
               bgSize="cover"
               bgPosition="center"
               position="relative"
-            >
-              <Box
-                position="absolute"
-                inset={0}
-                bg="blackAlpha.300"
-                backdropFilter="blur(1px)"
-              />
-            </Box>
+            />
           </SwiperSlide>
         ))}
       </Swiper>
