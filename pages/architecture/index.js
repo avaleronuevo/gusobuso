@@ -66,7 +66,7 @@ export default function Architecture() {
         <Navigation />
       </Box>
 
-      <Box pt={24}>
+      <Box pt={16}>
         <Grid 
           templateColumns="repeat(2, 1fr)"
           gap="1px"

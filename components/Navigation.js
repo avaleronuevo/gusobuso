@@ -19,7 +19,7 @@ export default function Navigation() {
           as={NextLink}
           href="/"
           color="white"
-          fontSize="lg"
+          fontSize="xl"
           textDecoration="none"
           transition="color 0.3s ease"
           _hover={{ 
@@ -30,12 +30,12 @@ export default function Navigation() {
           {links[0].label}
         </Link>
       </Box>
-      <Flex flex="2" justifyContent="center" gap={8}>
+      <Flex flex="2" justifyContent="center" gap={16}>
         <Link
           as={NextLink}
           href="/photography"
           color="white"
-          fontSize="lg"
+          fontSize="xl"
           textDecoration="none"
           transition="color 0.3s ease"
           _hover={{ 
@@ -49,7 +49,7 @@ export default function Navigation() {
           as={NextLink}
           href="/architecture"
           color="white"
-          fontSize="lg"
+          fontSize="xl"
           textDecoration="none"
           transition="color 0.3s ease"
           _hover={{ 
@@ -65,7 +65,7 @@ export default function Navigation() {
           as={NextLink}
           href="/about"
           color="white"
-          fontSize="lg"
+          fontSize="xl"
           textDecoration="none"
           transition="color 0.3s ease"
           _hover={{ 
