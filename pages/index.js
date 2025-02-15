@@ -1,4 +1,4 @@
-import { Box, Container, Heading } from '@chakra-ui/react';
+import { Box, Container } from '@chakra-ui/react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, EffectFade } from 'swiper/modules';
 import Navigation from '../components/Navigation';
@@ -11,18 +11,31 @@ const slides = [
   {
     id: 1,
     image: '/images/slide1.jpg',
-    title: 'Agustín',
   },
   {
     id: 2,
     image: '/images/slide2.jpg',
-    title: 'Photographer',
   },
   {
     id: 3,
     image: '/images/slide3.jpg',
-    title: 'Architect',
   },
+  {
+    id: 4,
+    image: '/images/slide4.jpg',
+  },
+  {
+    id: 5,
+    image: '/images/slide5.jpg',
+  },
+  {
+    id: 6,
+    image: '/images/slide6.jpg',
+  },
+  {
+    id: 7,
+    image: '/images/slide7.jpg',
+  }
 ];
 
 export default function Home() {
@@ -31,12 +44,15 @@ export default function Home() {
       <Box 
         position="fixed" 
         top={4} 
-        right={4} 
+        left={0}
+        right={0}
+        mx={4}
         zIndex={2}
         backdropFilter="blur(5px)"
         borderRadius="full"
         px={6}
         py={2}
+        boxShadow="0 4px 30px rgba(0, 0, 0, 0.3)"
       >
         <Navigation />
       </Box>
@@ -45,11 +61,16 @@ export default function Home() {
         modules={[Autoplay, EffectFade]}
         effect="fade"
         autoplay={{
-          delay: 5000,
+          delay: 6000,
           disableOnInteraction: false,
+          reverseDirection: false,
+          pauseOnMouseEnter: false,
+          stopOnLastSlide: false,
+          waitForTransition: true,
         }}
-        speed={2000}
+        speed={3000}
         loop={true}
+        random={true}
         style={{
           width: '100vw',
           height: '100vh',
@@ -75,23 +96,6 @@ export default function Home() {
           </SwiperSlide>
         ))}
       </Swiper>
-      
-      <Box
-        position="absolute"
-        bottom={8}
-        left={8}
-        color="white"
-        zIndex={2}
-        textShadow="2px 2px 4px rgba(0,0,0,0.5)"
-      >
-        <Heading 
-          size="2xl" 
-          fontWeight="light"
-          letterSpacing="wider"
-        >
-          Agustín
-        </Heading>
-      </Box>
     </Container>
   );
 }

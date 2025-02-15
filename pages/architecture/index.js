@@ -8,19 +8,25 @@ const architectureProjects = [
     id: 'residential',
     title: 'Residential',
     description: 'Proyectos residenciales y viviendas unifamiliares',
-    coverImage: '/images/architecture/residential-cover.jpg',
+    coverImage: 'https://picsum.photos/800/600?random=5',
   },
   {
     id: 'commercial',
     title: 'Commercial',
     description: 'Espacios comerciales y oficinas',
-    coverImage: '/images/architecture/commercial-cover.jpg',
+    coverImage: 'https://picsum.photos/800/600?random=6',
   },
   {
     id: 'urban-planning',
     title: 'Urban Planning',
     description: 'Proyectos de planificación urbana y espacio público',
-    coverImage: '/images/architecture/urban-planning-cover.jpg',
+    coverImage: 'https://picsum.photos/800/600?random=7',
+  },
+  {
+    id: 'cultural',
+    title: 'Cultural',
+    description: 'Espacios culturales y museos',
+    coverImage: 'https://picsum.photos/800/600?random=8',
   },
 ];
 
@@ -30,18 +36,28 @@ export default function Architecture() {
       <Box 
         position="fixed" 
         top={4} 
-        right={4} 
+        left={0}
+        right={0}
+        mx={4}
         zIndex={2}
         backdropFilter="blur(5px)"
         borderRadius="full"
         px={6}
         py={2}
+        boxShadow="0 4px 30px rgba(0, 0, 0, 0.3)"
       >
         <Navigation />
       </Box>
 
-      <Container maxW="container.xl" pt={24} pb={16}>
-        <VStack spacing={16} align="stretch">
+      <Container 
+        maxW="100vw" 
+        pt={24} 
+        pb={16} 
+        px={8}
+        h="calc(100vh - 32px)"
+        overflow="hidden"
+      >
+        <VStack spacing={8} align="stretch" h="100%">
           <Heading 
             size="2xl" 
             fontWeight="light"
@@ -51,12 +67,22 @@ export default function Architecture() {
           </Heading>
 
           <Grid 
-            templateColumns={{
-              base: "repeat(1, 1fr)",
-              md: "repeat(2, 1fr)",
-              lg: "repeat(3, 1fr)"
-            }}
+            templateColumns="repeat(2, 1fr)"
             gap={8}
+            overflowY="auto"
+            css={{
+              '&::-webkit-scrollbar': {
+                width: '4px',
+              },
+              '&::-webkit-scrollbar-track': {
+                width: '6px',
+              },
+              '&::-webkit-scrollbar-thumb': {
+                background: 'gray.500',
+                borderRadius: '24px',
+              },
+            }}
+            pr={4}
           >
             {architectureProjects.map((project) => (
               <Link 
@@ -66,10 +92,11 @@ export default function Architecture() {
               >
                 <Box
                   position="relative"
-                  h="400px"
+                  h="600px"
                   overflow="hidden"
                   role="group"
                   cursor="pointer"
+                  borderRadius="lg"
                 >
                   <Box
                     w="100%"
