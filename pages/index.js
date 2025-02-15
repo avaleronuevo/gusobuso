@@ -7,37 +7,61 @@ import 'swiper/css';
 import 'swiper/css/effect-fade';
 import 'swiper/css/autoplay';
 
-// Aquí definimos las imágenes del carrusel
+// Aquí definimos las imágenes del carrusel con sus colores predominantes
 const slides = [
   {
     id: 1,
     image: '/images/slide1.jpg',
+    isDark: true, // true si la imagen es oscura, false si es clara
   },
   {
     id: 2,
     image: '/images/slide2.jpg',
+    isDark: false,
   },
   {
     id: 3,
     image: '/images/slide3.jpg',
+    isDark: true,
   },
   {
     id: 4,
     image: '/images/slide4.jpg',
+    isDark: true,
   },
   {
     id: 5,
     image: '/images/slide5.jpg',
+    isDark: false,
   },
   {
     id: 6,
     image: '/images/slide6.jpg',
+    isDark: true,
   },
   {
     id: 7,
     image: '/images/slide7.jpg',
+    isDark: false,
   }
 ];
+
+const colors = {
+  light: [
+    '#1E1E1E', // negro
+    '#2C3E50', // azul oscuro
+    '#34495E', // gris oscuro
+    '#8E44AD', // morado
+    '#2E4053', // azul grisáceo
+  ],
+  dark: [
+    '#ECF0F1', // blanco grisáceo
+    '#F1C40F', // amarillo
+    '#E74C3C', // rojo
+    '#3498DB', // azul
+    '#2ECC71', // verde
+  ]
+};
 
 export default function Home() {
   const swiperRef = useRef(null);
@@ -49,68 +73,11 @@ export default function Home() {
     }
   };
 
-  const updateTextColor = async (imageUrl) => {
-    try {
-      const img = document.createElement('img');
-      img.crossOrigin = 'Anonymous';
-      img.src = imageUrl;
-      await new Promise((resolve) => {
-        img.onload = resolve;
-      });
-
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
-      canvas.width = img.width;
-      canvas.height = img.height;
-      ctx.drawImage(img, 0, 0);
-
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      const data = imageData.data;
-      let r = 0, g = 0, b = 0;
-      let pixelCount = 0;
-
-      // Calcular el color promedio de la parte superior de la imagen (donde está el texto)
-      for (let y = 0; y < canvas.height / 4; y++) {
-        for (let x = 0; x < canvas.width; x++) {
-          const i = (y * canvas.width + x) * 4;
-          r += data[i];
-          g += data[i + 1];
-          b += data[i + 2];
-          pixelCount++;
-        }
-      }
-
-      // Calcular el promedio
-      r = Math.round(r / pixelCount);
-      g = Math.round(g / pixelCount);
-      b = Math.round(b / pixelCount);
-
-      // Calcular el color complementario
-      const complementary = {
-        r: 255 - r,
-        g: 255 - g,
-        b: 255 - b
-      };
-
-      // Ajustar el contraste del color complementario
-      const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-      if (brightness > 128) {
-        // Si el fondo es claro, oscurecer el complementario
-        complementary.r = Math.max(0, complementary.r - 50);
-        complementary.g = Math.max(0, complementary.g - 50);
-        complementary.b = Math.max(0, complementary.b - 50);
-      } else {
-        // Si el fondo es oscuro, aclarar el complementario
-        complementary.r = Math.min(255, complementary.r + 50);
-        complementary.g = Math.min(255, complementary.g + 50);
-        complementary.b = Math.min(255, complementary.b + 50);
-      }
-
-      setTextColor(`rgb(${complementary.r}, ${complementary.g}, ${complementary.b})`);
-    } catch (error) {
-      console.error('Error al analizar la imagen:', error);
-      setTextColor('white'); // Color por defecto en caso de error
-    }
+  const updateTextColor = (slideIndex) => {
+    const slide = slides[slideIndex];
+    const colorArray = slide.isDark ? colors.dark : colors.light;
+    const randomColor = colorArray[Math.floor(Math.random() * colorArray.length)];
+    setTextColor(randomColor);
   };
 
   return (
@@ -150,8 +117,7 @@ export default function Home() {
           height: '100vh',
         }}
         onSlideChange={(swiper) => {
-          const currentSlide = slides[swiper.realIndex];
-          updateTextColor(currentSlide.image);
+          updateTextColor(swiper.realIndex);
         }}
       >
         {slides.map((slide) => (
